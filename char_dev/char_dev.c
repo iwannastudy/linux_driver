@@ -20,32 +20,32 @@ static struct class *char_cdev_class;
 static int char_cdev_open(struct inode *inode, struct file *file)
 {
     try_module_get(THIS_MODULE);
-    printk(KERN_INFO DEVICE_NAME "opend!\n");
+    printk(KERN_INFO DEVICE_NAME ":opend!\n");
     return 0;
 }
 
 static int char_cdev_release(struct inode *inode, struct file *file)
 {
-    printk(KERN_INFO DEVICE_NAME "closed!\n");
+    printk(KERN_INFO DEVICE_NAME ":closed!\n");
     module_put(THIS_MODULE);
     return 0;
 }
 
 static ssize_t char_cdev_read(struct file *file, char *buf, size_t count, loff_t *f_pos)
 {
-    printk(KERN_INFO DEVICE_NAME "read method!\n");
+    printk(KERN_INFO DEVICE_NAME ":read method!\n");
     return count;
 }
 
 static ssize_t char_cdev_write(struct file *file, const char *buf, size_t count, loff_t *f_pos)
 {
-    printk(KERN_INFO DEVICE_NAME "write method!\n");
+    printk(KERN_INFO DEVICE_NAME ":write method!\n");
     return count;
 }
 
 static int char_cdev_ioctl(struct inode *inode, struct file *file, unsigned int cmd, unsigned long arg)
 {
-    printk(KERN_INFO DEVICE_NAME "ioctl method!\n");
+    printk(KERN_INFO DEVICE_NAME ":ioctl method!\n");
     return 0;
 }
 
@@ -107,7 +107,7 @@ static int __init char_cdev_init(void)
         return -1;
     }
 
-    // create a node in /sys/
+    // create a node in /sys/module
     //device_create(char_cdev_class, NULL, devno, NULL, "char_cdev", "%d", MINOR(devno));
     device_create(char_cdev_class, NULL, devno, NULL, "char_cdev");
     printk(KERN_INFO "Init module, major dev id = %d.\n", major);
